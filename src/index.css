@@ -1,0 +1,991 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --navy: #0a1628;
+  --navy-deep: #0d2240;
+  --water: #185FA5;
+  --sky: #7ecfff;
+  --teal: #0F6E56;
+  --mint: #4ecfa0;
+  --amber: #f0a020;
+  --light: #e8f4ff;
+  --dim: #8ba4c4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--navy);
+  color: var(--light);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ==================== Layout ==================== */
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.game-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  min-width: 0;
+}
+
+.phaser-container {
+  flex: 1;
+  min-height: 0;
+}
+
+.phaser-container canvas {
+  display: block;
+}
+
+.game-controls {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  padding: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--dim);
+  background: var(--navy-deep);
+  border-top: 2px solid var(--water);
+}
+
+/* ==================== Dialogue Box ==================== */
+
+.dialogue-box {
+  position: absolute;
+  bottom: 40px;
+  left: 16px;
+  right: 16px;
+  background: var(--navy-deep);
+  border: 3px solid var(--water);
+  border-radius: 8px;
+  padding: 16px 20px;
+  cursor: pointer;
+  z-index: 50;
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dialogue-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--light);
+}
+
+.dialogue-advance {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--amber);
+  text-align: right;
+  margin-top: 8px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ==================== Sidebar ==================== */
+
+.sidebar {
+  width: 300px;
+  min-width: 300px;
+  height: 100vh;
+  background: var(--navy-deep);
+  border-left: 3px solid var(--water);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 2px solid var(--water);
+  text-align: center;
+}
+
+.sidebar-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--amber);
+  letter-spacing: 1px;
+}
+
+.sidebar-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--water);
+}
+
+.sidebar-tab {
+  flex: 1;
+  padding: 10px 4px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--dim);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sidebar-tab:hover {
+  color: var(--sky);
+  background: rgba(24, 95, 165, 0.15);
+}
+
+.sidebar-tab.active {
+  color: var(--amber);
+  background: rgba(240, 160, 32, 0.1);
+  border-bottom: 2px solid var(--amber);
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.sidebar-content::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-content::-webkit-scrollbar-track {
+  background: var(--navy);
+}
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: var(--water);
+  border-radius: 2px;
+}
+
+/* ==================== Trainer Card ==================== */
+
+.trainer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-avatar {
+  width: 48px;
+  height: 48px;
+  background: var(--water);
+  border: 2px solid var(--sky);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--light);
+}
+
+.card-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: var(--light);
+  margin: 0;
+}
+
+.card-subtitle {
+  font-size: 11px;
+  color: var(--sky);
+  margin-top: 2px;
+}
+
+.card-section {
+  padding-top: 10px;
+  border-top: 1px solid rgba(24, 95, 165, 0.3);
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.card-label {
+  color: var(--dim);
+  font-size: 11px;
+}
+
+.card-highlight {
+  color: var(--mint);
+  font-weight: 600;
+}
+
+.card-goal {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--sky);
+  font-style: italic;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.card-tag {
+  font-size: 10px;
+  padding: 3px 8px;
+  background: rgba(24, 95, 165, 0.2);
+  border: 1px solid var(--water);
+  border-radius: 4px;
+  color: var(--sky);
+}
+
+/* ==================== Pokédex ==================== */
+
+.pokedex-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--mint);
+  margin-bottom: 12px;
+}
+
+.pokedex-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pokedex-entry {
+  background: rgba(10, 22, 40, 0.6);
+  border: 1px solid rgba(24, 95, 165, 0.3);
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pokedex-entry:hover {
+  border-color: var(--water);
+}
+
+.pokedex-entry.expanded {
+  border-color: var(--mint);
+}
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entry-type-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.entry-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--light);
+  flex: 1;
+}
+
+.entry-pokemon {
+  font-size: 10px;
+  color: var(--dim);
+}
+
+.entry-level-bar {
+  position: relative;
+  height: 12px;
+  background: rgba(10, 22, 40, 0.8);
+  border-radius: 6px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.entry-level-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.entry-level-text {
+  position: absolute;
+  right: 6px;
+  top: 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  line-height: 12px;
+  color: var(--light);
+}
+
+.entry-details {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(24, 95, 165, 0.2);
+}
+
+.entry-type-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.entry-desc {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+/* ==================== Experience ==================== */
+
+.exp-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--mint);
+  margin-bottom: 12px;
+}
+
+.exp-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exp-card {
+  background: rgba(10, 22, 40, 0.6);
+  border: 1px solid rgba(24, 95, 165, 0.3);
+  border-left: 3px solid var(--water);
+  border-radius: 0 6px 6px 0;
+  padding: 12px;
+}
+
+.exp-card.onboarding {
+  border-left-color: var(--amber);
+  opacity: 0.8;
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.exp-org {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--light);
+  margin: 0;
+}
+
+.exp-period {
+  font-size: 10px;
+  color: var(--sky);
+  white-space: nowrap;
+}
+
+.exp-role {
+  font-size: 11px;
+  color: var(--mint);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.exp-badge {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  padding: 2px 6px;
+  background: var(--amber);
+  color: var(--navy);
+  border-radius: 3px;
+}
+
+.exp-location {
+  font-size: 10px;
+  color: var(--dim);
+  margin-top: 2px;
+}
+
+.exp-points {
+  margin-top: 8px;
+  padding-left: 16px;
+  list-style: disc;
+}
+
+.exp-points li {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--dim);
+  margin-bottom: 4px;
+}
+
+/* ==================== Save Toast ==================== */
+
+.save-toast {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--mint);
+  background: var(--navy);
+  border: 2px solid var(--mint);
+  border-radius: 6px;
+  padding: 8px 16px;
+  animation: toast-in 0.3s ease, toast-out 0.3s ease 2.5s forwards;
+  z-index: 100;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ==================== Project Card (overlay on game) ==================== */
+
+.project-card-wrapper,
+.socials-panel-wrapper {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 22, 40, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  animation: fade-in 0.2s ease;
+}
+
+.project-card {
+  width: 300px;
+  max-height: 80%;
+  overflow-y: auto;
+  background: var(--navy-deep);
+  border: 2px solid var(--water);
+  border-radius: 8px;
+  padding: 14px;
+  animation: pop-in 0.25s ease;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.project-card-header {
+  margin-bottom: 10px;
+}
+
+.project-rarity {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.project-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: var(--light);
+  margin: 4px 0 2px;
+}
+
+.project-subtitle {
+  font-size: 11px;
+  color: var(--sky);
+}
+
+.project-card-body {
+  margin-bottom: 10px;
+}
+
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.project-stack-tag {
+  font-size: 9px;
+  padding: 2px 6px;
+  background: rgba(24, 95, 165, 0.2);
+  border: 1px solid var(--water);
+  border-radius: 3px;
+  color: var(--sky);
+}
+
+.project-desc {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--dim);
+  margin-bottom: 6px;
+}
+
+.project-desc strong {
+  color: var(--light);
+}
+
+.project-github-btn {
+  display: block;
+  text-align: center;
+  padding: 8px;
+  background: var(--water);
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.project-github-btn:hover {
+  background: #2080d0;
+}
+
+/* ==================== Socials Panel (overlay on game) ==================== */
+
+.socials-panel {
+  width: 280px;
+  background: var(--navy-deep);
+  border: 2px solid #e04040;
+  border-radius: 8px;
+  padding: 14px;
+  animation: pop-in 0.25s ease;
+}
+
+.socials-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #e04040;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.socials-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: rgba(10, 22, 40, 0.6);
+  border: 2px solid;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.social-link:hover {
+  background: rgba(24, 95, 165, 0.15);
+  transform: translateX(2px);
+}
+
+.social-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--navy);
+  flex-shrink: 0;
+}
+
+.social-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--light);
+}
+
+/* ==================== Snorlax Modal ==================== */
+
+.snorlax-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 22, 40, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  animation: fade-in 0.3s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.snorlax-modal-content {
+  background: var(--navy-deep);
+  border: 3px solid var(--water);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+}
+
+.snorlax-text {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--light);
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+
+.snorlax-subtext {
+  font-size: 12px;
+  color: var(--dim);
+  margin-bottom: 16px;
+}
+
+.flute-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  background: var(--amber);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.flute-btn:hover {
+  background: #f0b840;
+  transform: scale(1.02);
+}
+
+.flute-icon {
+  font-size: 16px;
+}
+
+.flute-playing {
+  padding: 12px;
+  color: var(--amber);
+}
+
+.flute-notes {
+  font-size: 20px;
+  display: block;
+  margin-bottom: 8px;
+  animation: notes-float 1.2s ease infinite;
+}
+
+@keyframes notes-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.flute-playing p {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--dim);
+}
+
+/* Contact modal (after Snorlax wakes) */
+
+.contact-modal {
+  border-color: var(--mint);
+}
+
+.contact-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--mint);
+  margin-bottom: 4px;
+}
+
+.contact-subtitle {
+  font-size: 12px;
+  color: var(--dim);
+  margin-bottom: 16px;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(10, 22, 40, 0.6);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.15s;
+  color: var(--light);
+  font-size: 12px;
+}
+
+.contact-link:hover {
+  background: rgba(24, 95, 165, 0.2);
+  transform: translateX(3px);
+}
+
+.contact-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.contact-link.linkedin .contact-icon {
+  background: #0a66c2;
+  color: #fff;
+}
+
+.contact-link.github .contact-icon {
+  background: #e8e8e8;
+  color: var(--navy);
+}
+
+.contact-link.email .contact-icon {
+  background: var(--mint);
+  color: var(--navy);
+}
+
+.save-game-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  background: var(--amber);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: all 0.15s;
+}
+
+.save-game-btn:hover {
+  background: #f0b840;
+}
+
+.save-icon {
+  font-size: 14px;
+}
+
+.close-modal-btn {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  color: var(--dim);
+  border: 1px solid rgba(24, 95, 165, 0.3);
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.close-modal-btn:hover {
+  color: var(--light);
+  border-color: var(--water);
+}
+
+/* ==================== Audio Toggle ==================== */
+
+.audio-toggle {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 32px;
+  height: 32px;
+  background: var(--navy-deep);
+  border: 2px solid var(--water);
+  border-radius: 6px;
+  color: var(--light);
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.audio-toggle:hover {
+  background: var(--water);
+}
+
+.audio-toggle.muted {
+  opacity: 0.5;
+}
+
+/* ==================== Mobile D-Pad ==================== */
+
+.mobile-dpad {
+  position: absolute;
+  bottom: 40px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 30;
+  pointer-events: none;
+  display: none;
+}
+
+.dpad-cross {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.dpad-row {
+  display: flex;
+  align-items: center;
+}
+
+.dpad-btn {
+  width: 44px;
+  height: 44px;
+  background: rgba(13, 34, 64, 0.85);
+  border: 2px solid var(--water);
+  border-radius: 8px;
+  color: var(--light);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.dpad-btn:active {
+  background: var(--water);
+}
+
+.dpad-center {
+  width: 20px;
+  height: 20px;
+}
+
+.dpad-action {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--amber);
+  border: 3px solid #c08010;
+  color: var(--navy);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.dpad-action:active {
+  background: #f0b840;
+  transform: scale(0.95);
+}
+
+/* ==================== Mobile ==================== */
+
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .game-container {
+    height: 60vh;
+    position: relative;
+  }
+
+  .game-controls {
+    display: none;
+  }
+
+  .mobile-dpad {
+    display: flex;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: 40vh;
+    border-left: none;
+    border-top: 3px solid var(--water);
+  }
+
+  .project-card, .socials-panel {
+    width: calc(100% - 24px);
+    max-width: none;
+  }
+}
