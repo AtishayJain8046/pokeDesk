@@ -2,7 +2,7 @@
 
 A Gen 3 GBA-style Pokemon portfolio website where visitors play as **Trainer Atishay** and explore Pallet Town to discover his resume, projects, skills, and experience.
 
-**[Live Demo →](#)** *(add your Vercel URL after deploying)*
+**[Live Demo →](#)** *(https://poke-desk-seven.vercel.app/)*
 
 ![Pokemon Portfolio](https://img.shields.io/badge/Built_With-Phaser_3_+_React_18-185FA5?style=flat-square) ![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?style=flat-square) ![Deploy](https://img.shields.io/badge/Deploy-Vercel-000?style=flat-square)
 
